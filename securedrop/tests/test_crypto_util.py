@@ -295,6 +295,15 @@ def test_delete_reply_keypair_no_key(source_app):
     source_app.crypto_util.delete_reply_keypair('Reality Winner')
 
 
+def test_delete_reply_keypair_non_source(source_app, mocker):
+    """
+    Checks that a non-source key is not deleted by delete_reply_keypair.
+    """
+    name = "SecureDrop Test/Development (DO NOT USE IN PRODUCTION)"
+    source_app.crypto_util.delete_reply_keypair(name)
+    assert source_app.crypto_util.get_fingerprint(name)
+
+
 def test_get_fingerprint(source_app, test_source):
     assert (source_app.crypto_util.get_fingerprint(test_source['filesystem_id'])
             is not None)
